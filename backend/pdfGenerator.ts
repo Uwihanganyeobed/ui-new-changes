@@ -1253,10 +1253,13 @@ async function generateMultiProgramTimetablePDF(
 
       doc.rect(rx, currentY, colWidths.time, rowHeight);
       let timeText = '';
-      if (program === 'DAY' || program === 'EVENING') {
-        timeText = program === 'DAY' ? '08:00 a.m - 02:00 p.m' : '05:30 p.m - 09:30 p.m';
-      } else if (program === 'WEEKEND') {
+      const normProgram = (program || '').toUpperCase().trim();
+      if (normProgram === 'DAY' || normProgram === 'EVENING') {
+        timeText = normProgram === 'DAY' ? '08:00 a.m - 02:00 p.m' : '05:30 p.m - 09:30 p.m';
+      } else if (normProgram === 'WEEKEND') {
         timeText = '08:00 a.m - 05:30 p.m'; // Sunday full day / Saturday evening range
+      } else {
+        timeText = '08:00 a.m - 02:00 p.m'; // Default fallback
       }
       doc.text(timeText, rx + colWidths.time / 2, currentY + rowHeight / 2, { align: 'center', baseline: 'middle' });
       rx += colWidths.time;
