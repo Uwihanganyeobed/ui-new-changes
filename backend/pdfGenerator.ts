@@ -257,8 +257,7 @@ function addTimetableHeader(
   const leftMargin = 10;
   doc.text('CAMPUS: KIGALI', leftMargin, 8);
   doc.text(facultyName.toUpperCase(), leftMargin, 13);
-  doc.text(`DEPARTMENT: ${department.name.toUpperCase()}`, leftMargin, 18);
-  doc.text('WEEKLY TIMETABLE', leftMargin, 23);
+  doc.text('WEEKLY TIMETABLE', leftMargin, 18);
 
   // Center the main title
   doc.setFontSize(12);
@@ -1273,7 +1272,8 @@ async function generateMultiProgramTimetablePDF(
       doc.setFontSize(6);
       const levelName = firstSession.course.levelClass?.name || firstSession.course.level || 'Unknown Level';
       const groupLabel = firstSession.group ? ` (${firstSession.group})` : '';
-      const displayClass = `${levelName} | ${firstSession.course.name}${groupLabel}`;
+      const deptLabel = firstSession.course.department?.code || firstSession.course.department?.name || "";
+      const displayClass = `${levelName} | ${deptLabel}${groupLabel}`;
       doc.text(displayClass, rx + 2, currentY + 5, { maxWidth: colWidths.class - 4 });
       rx += colWidths.class;
 
